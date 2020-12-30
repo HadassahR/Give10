@@ -24,7 +24,7 @@ public class GiveCharity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_income);
+        setContentView(R.layout.activity_give_charity);
         setupToolbar();
         setupFAB();
 
@@ -33,27 +33,17 @@ public class GiveCharity extends AppCompatActivity {
         giveDate = findViewById(R.id.give_date);
         giveSource = findViewById(R.id.give_source);
 
-        if (giveDate != null) {
-            giveDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        selectDate(v);
-                    }
-                }
-            });
-        }
+        giveDate.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                selectDate(v);
+            }
+        });
     }
 
     private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
     }
 
     private void setupToolbar() {
@@ -69,16 +59,11 @@ public class GiveCharity extends AppCompatActivity {
             final MaterialDatePicker<Long> picker = builder.build();
 
             picker.addOnPositiveButtonClickListener(
-                    new MaterialPickerOnPositiveButtonClickListener<Long>() {
-                        @Override
-                        public void onPositiveButtonClick(Long selection) {
-                            giveDate.setText(DateUtils.getFormattedDate(selection));
-                        }
-                    }
+                    selection -> giveDate.setText(DateUtils.getFormattedDate(selection))
             );
             picker.show(getSupportFragmentManager(), picker.toString());
 
-        } catch (Exception exc){
+        } catch (Exception exc) {
             Snackbar.make(view, "There was an error", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }

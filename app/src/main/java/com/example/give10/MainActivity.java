@@ -44,13 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Use this app to track the charity you give.", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Use this app to track the charity you give.", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
     }
 
     private void setupToolbar() {
