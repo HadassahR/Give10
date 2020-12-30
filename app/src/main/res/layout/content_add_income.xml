@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dialog_height"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="?actionBarSize"
+        android:layout_marginTop="@dimen/top_margin"
+        app:layout_constraintStart_toEndOf="@id/v_margin"
+        app:layout_constraintTop_toBottomOf="@id/h_margin">
+
+        <ImageView
+            android:id="@+id/amount_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_attach_money_24"
+            app:layout_constraintStart_toEndOf="@+id/v_margin"
+            app:layout_constraintTop_toBottomOf="@+id/h_margin" />
+
+        <EditText
+            android:id="@+id/t_add_amount"
+            style="@style/enter_dollar_text_style"
+            android:hint="@string/amount" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="?actionBarSize"
+        android:layout_marginTop="@dimen/fab_margin"
+        app:layout_constraintStart_toEndOf="@id/v_margin"
+        app:layout_constraintTop_toBottomOf="@id/h_margin"
+        android:layout_marginStart="?actionBarSize">
+
+        <ImageView
+            android:id="@+id/date_icon"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_calendar_today_24"
+            app:layout_constraintStart_toEndOf="@+id/v_margin"
+            app:layout_constraintTop_toBottomOf="@+id/h_margin" />
+
+        <EditText
+            android:id="@+id/date_income"
+            style="@style/enter_date_text_style"
+            android:hint="@string/date_received" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="?actionBarSize"
+        android:layout_marginLeft="?actionBarSize"
+        android:layout_marginTop="@dimen/fab_margin"
+        app:layout_constraintStart_toEndOf="@id/v_margin"
+        app:layout_constraintTop_toBottomOf="@id/h_margin">
+
+        <ImageView
+            android:id="@+id/person"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_baseline_people_24"
+            app:layout_constraintStart_toEndOf="@+id/v_margin"
+            app:layout_constraintTop_toBottomOf="@+id/h_margin" />
+
+        <EditText
+            android:id="@+id/source"
+            style="@style/enter_source_text_style"
+            android:hint="@string/from_where" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/spacer"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize" />
+
+</LinearLayout>

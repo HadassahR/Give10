@@ -1,0 +1,6 @@
+<resources>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="land_spacer_width">110dp</dimen>
+    <dimen name="top_margin">30dp</dimen>
+    <dimen name="dialog_height">350dp</dimen>
+</resources>

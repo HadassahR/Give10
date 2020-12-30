@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:orientation="horizontal"
+    android:paddingTop="85dp">
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/main_card"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+
+        <LinearLayout style="@style/main_card_ll">
+
+
+            <TextView
+                android:id="@+id/tv_total_income"
+                style="@style/main_card_title"
+                android:text="@string/total_income" />
+
+            <TextView
+                android:id="@+id/tv_total_income_num"
+                style="@style/main_card_amount"
+                android:text="@string/income_num" />
+
+            <Button
+                android:id="@+id/btn_add"
+                style="@style/green_button"
+                android:text="@string/add_money" />
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/spacer"
+        android:layout_width="@dimen/land_spacer_width"
+        style="@style/card_spacer" />
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/main_card"
+        app:cardCornerRadius="3dp"
+        app:cardElevation="4dp"
+        app:cardUseCompatPadding="true">
+
+
+        <LinearLayout style="@style/main_card_ll">
+
+            <TextView
+                android:id="@+id/tv_total_given"
+                style="@style/main_card_title"
+                android:text="@string/total_given" />
+
+            <TextView
+                android:id="@+id/tv_total_given_num"
+                style="@style/main_card_amount"
+                android:text="@string/given_num" />
+
+            <Button
+                android:id="@+id/btn_give"
+                style="@style/green_button"
+                android:text="@string/give_charity" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

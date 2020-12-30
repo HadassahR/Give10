@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="green_button">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textColor">@color/secondaryTextColor</item>
+    </style>
+
+    <style name="main_card">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="main_card_ll">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="main_card_title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="main_card_amount">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">30sp</item>
+    </style>
+
+    <style name="card_spacer">
+        <item name="android:layout_width">@dimen/fab_margin</item>
+        <item name="android:layout_height">@dimen/fab_margin</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="enter_dollar_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:ems">10</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:inputType">numberDecimal</item>
+    </style>
+
+    <style name="enter_date_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:ems">10</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:inputType">date</item>
+    </style>
+
+    <style name="enter_source_text_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:ems">10</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">sans-serif-light</item>
+        <item name="android:inputType">text</item>
+    </style>
+</resources>
