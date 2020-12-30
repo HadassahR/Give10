@@ -9,13 +9,12 @@
 
     <com.google.android.material.card.MaterialCardView
         style="@style/main_card"
+        android:layout_marginBottom="@dimen/fab_margin"
         app:cardCornerRadius="3dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
 
-
         <LinearLayout style="@style/main_card_ll">
-
 
             <TextView
                 android:id="@+id/tv_total_income"
@@ -35,10 +34,6 @@
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/spacer"
-        style="@style/card_spacer" />
 
     <com.google.android.material.card.MaterialCardView
         style="@style/main_card"

@@ -1,6 +1,5 @@
 package com.example.give10;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
@@ -12,7 +11,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 
 public class AddIncome extends AppCompatActivity {
@@ -36,12 +34,9 @@ public class AddIncome extends AppCompatActivity {
         addSource = findViewById(R.id.source);
 
 
-            addDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                @Override
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if (hasFocus) {
-                        selectDate(v);
-                    }
+            addDate.setOnFocusChangeListener((v, hasFocus) -> {
+                if (hasFocus) {
+                    selectDate(v);
                 }
             });
 
@@ -49,13 +44,8 @@ public class AddIncome extends AppCompatActivity {
 
     private void setupFAB() {
         FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        fab.setOnClickListener(view -> Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show());
     }
 
     private void setupToolbar() {
@@ -70,12 +60,7 @@ public class AddIncome extends AppCompatActivity {
             final MaterialDatePicker<Long> picker = builder.build();
 
             picker.addOnPositiveButtonClickListener(
-                    new MaterialPickerOnPositiveButtonClickListener<Long>() {
-                        @Override
-                        public void onPositiveButtonClick(Long selection) {
-                                addDate.setText(DateUtils.getFormattedDate(selection));
-                        }
-                    }
+                    selection -> addDate.setText(DateUtils.getFormattedDate(selection))
             );
             picker.show(getSupportFragmentManager(), picker.toString());
 

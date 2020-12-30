@@ -5,17 +5,17 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
     android:orientation="horizontal"
-    android:paddingTop="85dp">
+    android:paddingTop="75dp">
 
     <com.google.android.material.card.MaterialCardView
         style="@style/main_card"
+        android:layout_marginEnd="@dimen/land_spacer_width"
+        android:layout_marginRight="@dimen/land_spacer_width"
         app:cardCornerRadius="3dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
 
-
         <LinearLayout style="@style/main_card_ll">
-
 
             <TextView
                 android:id="@+id/tv_total_income"
@@ -30,22 +30,17 @@
             <Button
                 android:id="@+id/btn_add"
                 style="@style/green_button"
+                android:onClick="openAddActivity"
                 android:text="@string/add_money" />
         </LinearLayout>
 
     </com.google.android.material.card.MaterialCardView>
-
-    <TextView
-        android:id="@+id/spacer"
-        android:layout_width="@dimen/land_spacer_width"
-        style="@style/card_spacer" />
 
     <com.google.android.material.card.MaterialCardView
         style="@style/main_card"
         app:cardCornerRadius="3dp"
         app:cardElevation="4dp"
         app:cardUseCompatPadding="true">
-
 
         <LinearLayout style="@style/main_card_ll">
 
@@ -62,6 +57,7 @@
             <Button
                 android:id="@+id/btn_give"
                 style="@style/green_button"
+                android:onClick="openGiveActivity"
                 android:text="@string/give_charity" />
 
         </LinearLayout>

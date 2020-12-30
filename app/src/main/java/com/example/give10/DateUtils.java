@@ -12,7 +12,6 @@ public class DateUtils {
         long offsetFromUTC =
                 TimeZone.getDefault ().getOffset (new Date().getTime ()) * -1;
 
-        @SuppressWarnings ("SpellCheckingInspection")
         SimpleDateFormat sdf = new SimpleDateFormat ("MM/dd/yyyy",
                 Locale.getDefault ());
 
