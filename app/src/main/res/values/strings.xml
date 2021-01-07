@@ -21,4 +21,18 @@
     <string name="date_received">Date received</string>
     <string name="title_activity_give_charity">Give Charity</string>
     <string name="to_where">To where</string>
+    <string name="about_app">Give 10 is a charity tracking app that allows users to track how much Maaser Money they owe
+    based on their income. \n\n By default, the app calculates based on the 10% requirement, however it can be changed.
+    User "adds money" upon receiving income and "gives charity". \n\nTotal owed is displayed on the home screen. User can view summary of
+    their "transactions" as well.</string>
+    <string name="transaction">Transaction</string>
+    <string name="date">Date</string>
+    <string name="title_activity_summary">Summary</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="date_given">Date given</string>
 </resources>

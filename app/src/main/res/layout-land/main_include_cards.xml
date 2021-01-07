@@ -30,7 +30,7 @@
             <Button
                 android:id="@+id/btn_add"
                 style="@style/green_button"
-                android:onClick="openAddActivity"
+                android:onClick="showAddActivity"
                 android:text="@string/add_money" />
         </LinearLayout>
 
@@ -57,7 +57,7 @@
             <Button
                 android:id="@+id/btn_give"
                 style="@style/green_button"
-                android:onClick="openGiveActivity"
+                android:onClick="showGiveActivity"
                 android:text="@string/give_charity" />
 
         </LinearLayout>

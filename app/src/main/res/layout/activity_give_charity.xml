@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AddIncome">
+    tools:context=".activities.AddIncome">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -23,11 +23,11 @@
     <include layout="@layout/content_give_charity" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/give_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/btn_minus" />
+        android:src="@drawable/ic_baseline_outbond_24" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

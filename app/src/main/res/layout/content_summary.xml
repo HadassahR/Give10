@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/transactions"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_margin="?actionBarSize"
+    android:paddingEnd="4dp"
+    android:paddingRight="4dp"
+    android:paddingBottom="4dp"
+    tools:listitem="@layout/transaction_entry"
+    tools:itemCount="4"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+</androidx.recyclerview.widget.RecyclerView>

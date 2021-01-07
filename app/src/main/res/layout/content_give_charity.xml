@@ -54,7 +54,7 @@
         <EditText
             android:id="@+id/give_date"
             style="@style/enter_date_text_style"
-            android:hint="@string/date_received"
+            android:hint="@string/date_given"
             android:onClick="selectDate" />
     </LinearLayout>
 
