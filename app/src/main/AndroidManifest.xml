@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Give10">
         <activity
-            android:name=".activities.Summary"
+            android:name=".activities.SummaryActivity"
             android:label="@string/title_activity_summary"
             android:theme="@style/Theme.Give10.NoActionBar" />
         <activity

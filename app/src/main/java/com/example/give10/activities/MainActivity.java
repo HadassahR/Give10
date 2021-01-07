@@ -6,13 +6,16 @@ import android.os.Bundle;
 import com.example.give10.R;
 import com.example.give10.lib.DialogUtils;
 import com.example.give10.models.Give10;
+import com.example.give10.models.Transaction;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
@@ -20,16 +23,34 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     // Fields for main activity
-    private static TextView owed;
-    private TextView totalI;
-    private TextView totalG;
-    private Button btnAdd;
-    private Button btnGive;
+    private TextView mOwed;
+    private TextView mTotalIncome;
+    private TextView mTotalGiven;
+
     private Give10 mGive10;
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("GIVE10", mGive10.getGSONFromThis());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        String json = savedInstanceState.getString("GIVE10");
+        mGive10 = Give10.getObjectFromGSONString(json);
+
+        updateTextViews();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,15 +58,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setupToolbar();
         setupFAB();
+        setupViews();
 
         mGive10 = new Give10();
-        // Initialize fields for main
-        owed = findViewById(R.id.tv_balance);
-        totalI = findViewById(R.id.tv_total_income_num);
-        totalG = findViewById(R.id.tv_total_given_num);
-        btnAdd = findViewById(R.id.btn_add);
-        btnGive = findViewById(R.id.btn_give);
+    }
 
+    private void setupViews() {
+        mOwed = findViewById(R.id.tv_balance);
+        mTotalIncome = findViewById(R.id.tv_total_income_num);
+        mTotalGiven = findViewById(R.id.tv_total_given_num);
     }
 
     private void setupFAB() {
@@ -98,8 +119,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showSummary() {
-        //TODO implement showSummary
-        startActivity(new Intent(this, Summary.class));
+        Intent intent = new Intent(this, SummaryActivity.class);
+        intent.putExtra("GIVE10", mGive10.getGSONFromThis());
+        startActivity(intent);
     }
 
     private void showAbout() {
@@ -108,26 +130,38 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == 1 || requestCode == 2) {
-            Log.d("MAASER", "Owed: " + mGive10.getAmountOwed());
-            owed.setText("$" + mGive10.getAmountOwed());
-        }
-        else
+        if (requestCode == 1 || requestCode==2) {
+            if (resultCode == RESULT_OK) {
+                addIncomingTransactions(data);
+                updateTextViews();
+            }
+        } else
             super.onActivityResult(requestCode, resultCode, data);
 
     }
 
+    private void addIncomingTransactions(@Nullable Intent data) {
+        String json = data.getStringExtra("LIST");
+        List<Transaction> incomingList = new Gson().fromJson(json,
+                new TypeToken<ArrayList<Transaction>>() {
+                }.getType());
+        mGive10.addTransactions(incomingList);
+    }
+
+    private void updateTextViews() {
+        mOwed.setText(String.format(Locale.getDefault(), "$%.2f", mGive10.getAmountOwed()));
+        mTotalIncome.setText(String.format(Locale.getDefault(), "$%.2f", mGive10.getIncome()));
+        mTotalGiven.setText(String.format(Locale.getDefault(), "$%.2f", mGive10.getCharity()));
+    }
+
     public void showAddActivity(View view) {
         Intent intent = new Intent(this, AddIncome.class);
-        intent.putExtra("GIVE10", mGive10.getGSONFromThis());
         startActivityForResult(intent, 1);
     }
 
     public void showGiveActivity(View view) {
         Intent intent = new Intent(this, GiveCharity.class);
-        intent.putExtra("GIVE10", mGive10.getGSONFromThis());
         startActivityForResult(intent, 2);
     }
-
 
 }

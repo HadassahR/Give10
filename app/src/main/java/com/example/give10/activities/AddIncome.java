@@ -6,10 +6,13 @@ import android.os.Bundle;
 import com.example.give10.R;
 import com.example.give10.classes.DateUtils;
 import com.example.give10.lib.DialogUtils;
-import com.example.give10.models.Give10;
+import com.example.give10.models.Transaction;
+import com.example.give10.types.TransactionType;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,14 +22,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddIncome extends AppCompatActivity {
 
     // Fields for add income
-    private EditText addAmount;
-    private EditText addDate;
+    private EditText mAddAmount;
+    private EditText mAddDate;
     private EditText addSource;
-//    private Button addComplete;
-    private Give10 mGive10;
+    private List<Transaction> mTransactionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,24 +39,20 @@ public class AddIncome extends AppCompatActivity {
         setContentView(R.layout.activity_add_income);
         setupToolbar();
         setupFAB();
-        getIncomingGive10();
+
+        // current transactions to be sent back if at least one added to it; otherwise ignored
+        mTransactionList = new ArrayList<>();
 
         // Initialize fields for add income
-        addAmount = findViewById(R.id.t_add_amount);
-        addDate = findViewById(R.id.date_income);
+        mAddAmount = findViewById(R.id.t_add_amount);
+        mAddDate = findViewById(R.id.date_income);
         addSource = findViewById(R.id.source);
-        addDate.setOnFocusChangeListener((v, hasFocus) -> {
-                if (hasFocus) {
-                    selectDate(v);
-                }
-            });
+        mAddDate.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                selectDate(v);
+            }
+        });
 
-    }
-
-    private void getIncomingGive10() {
-        Intent intent = getIntent();
-        String gson = intent.getExtras().getString("GIVE10");
-        mGive10 = Give10.getObjectFromGSONString(gson);
     }
 
     private void setupFAB() {
@@ -59,8 +60,10 @@ public class AddIncome extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (addAmount != null) {
-                    incomeTransaction();
+                if (mAddAmount != null) {
+                    createNewTransaction();
+                    alertIncomeAmountAdded();
+                    clearFields();
                 }
             }
         });
@@ -81,26 +84,53 @@ public class AddIncome extends AppCompatActivity {
             final MaterialDatePicker<Long> picker = builder.build();
 
             picker.addOnPositiveButtonClickListener(
-                    selection -> addDate.setText(DateUtils.getFormattedDate(selection))
+                    selection -> mAddDate.setText(DateUtils.getFormattedDate(selection))
             );
             picker.show(getSupportFragmentManager(), picker.toString());
 
-        } catch (Exception exc){
+        } catch (Exception exc) {
             Snackbar.make(view, "There was an error", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
         }
     }
 
-    private void incomeTransaction() {
-        // TODO Implement method incomeTransaction
-
-        String amount = addAmount.getText().toString();
+    private void alertIncomeAmountAdded() {
+        String amount = mAddAmount.getText().toString();
         DialogUtils.showInfoDialog(this, "ADD INCOME", "Successfully added $" +
-                amount + " to your income");
-        mGive10.setIncome(Double.parseDouble(amount));
-        addAmount.setText(null);
-        addDate.setText(null);
+                amount + " to your income.");
+    }
+
+    private void createNewTransaction() {
+        String amount = mAddAmount.getText().toString();
+        double dblAmount = Double.parseDouble(amount);
+        String date = mAddDate.getText().toString();
+        String src = addSource.getText().toString();
+
+        mTransactionList.add(
+                new Transaction(TransactionType.INCOME, dblAmount, date, src));
+    }
+
+    private void clearFields() {
+        mAddAmount.setText(null);
+        mAddDate.setText(null);
         addSource.setText(null);
+    }
+
+    @Override
+    public void onBackPressed() {
+        sendBackCurrentTransactionsIfAny();
+        super.onBackPressed();
+    }
+
+    private void sendBackCurrentTransactionsIfAny() {
+        int result = mTransactionList.size()>0 ? RESULT_OK : RESULT_CANCELED;
+        if (result == RESULT_OK) {
+            Intent intent = new Intent();
+            String json = new Gson().toJson(mTransactionList,
+                    new TypeToken<ArrayList<Transaction>>() {}.getType());
+            intent.putExtra("LIST", json);
+            setResult(result, intent);
+        }
     }
 
     @Override
