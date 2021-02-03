@@ -1,13 +1,18 @@
 package com.example.give10.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.give10.R;
 import com.example.give10.classes.DateUtils;
 import com.example.give10.lib.DialogUtils;
+import com.example.give10.models.Transaction;
+import com.example.give10.types.TransactionType;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,13 +22,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GiveCharity extends AppCompatActivity {
 
-    // Fields for add income
+    // Fields for give charity
     private EditText giveAmount;
     private EditText giveDate;
     private EditText giveSource;
-//    private Button giveComplete;
+    private List<Transaction> mTransactionList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +40,12 @@ public class GiveCharity extends AppCompatActivity {
         setupToolbar();
         setupFAB();
 
+        mTransactionList = new ArrayList<>();
+
         // Initialize fields for add income
         giveAmount = findViewById(R.id.t_give_amount);
         giveDate = findViewById(R.id.give_date);
         giveSource = findViewById(R.id.give_source);
-//        giveComplete = findViewById(R.id.give_fab);
 
         giveDate.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -51,7 +60,10 @@ public class GiveCharity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (giveAmount != null) {
-                    charityTransaction();
+                    createNewTransaction();
+                    alertIncomeAmountGiven();
+                    clearFields();
+//                    charityTransaction();
                 }
             }
         });
@@ -82,15 +94,44 @@ public class GiveCharity extends AppCompatActivity {
         }
     }
 
-    private void charityTransaction() {
-        // TODO Implement method charityTransaction
+    private void createNewTransaction(){
         String amount = giveAmount.getText().toString();
-        DialogUtils.showInfoDialog(this, "GIVE CHARITY", "Successfully gave $" +
-                amount + " to charity");
+        double dblAmount = Double.parseDouble(amount);
+        String date = giveDate.getText().toString();
+        String src = giveSource.getText().toString();
+
+        mTransactionList.add(new Transaction(TransactionType.CHARITY, dblAmount, date, src));
+    }
+
+    private void clearFields() {
         giveAmount.setText(null);
         giveDate.setText(null);
         giveSource.setText(null);
     }
+
+    public void alertIncomeAmountGiven() {
+        String amount = giveAmount.getText().toString();
+        DialogUtils.showInfoDialog(this, "GIVE CHARITY", "Successfully gave $" +
+                amount + " to charity.");
+    }
+
+    @Override
+    public void onBackPressed() {
+        sendBackCurrentTransactionsIfAny();
+        super.onBackPressed();
+    }
+
+    private void sendBackCurrentTransactionsIfAny() {
+        int result = mTransactionList.size()>0 ? RESULT_OK : RESULT_CANCELED;
+        if (result == RESULT_OK) {
+            Intent intent = new Intent();
+            String json = new Gson().toJson(mTransactionList,
+                    new TypeToken<ArrayList<Transaction>>() {}.getType());
+            intent.putExtra("LIST", json);
+            setResult(result, intent);
+        }
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

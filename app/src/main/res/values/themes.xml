@@ -28,6 +28,10 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="Theme.Give10.NoActionBar.SplashScreen">
+        <item name = "android:background">@drawable/splash</item>
+    </style>
+
     <style name="Theme.Give10.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Give10.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

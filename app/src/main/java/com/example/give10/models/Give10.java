@@ -60,8 +60,7 @@ public class Give10 {
     }
 
     public double getAmountOwed() {
-        double incomeMinusChar = this.mIncome - this.mCharity;
-        return incomeMinusChar * mPercentage;
+        return (this.mIncome * mPercentage) - this.mCharity;
     }
 
     public void addTransactions(List<Transaction> transactionList)

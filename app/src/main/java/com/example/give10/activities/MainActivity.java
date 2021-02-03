@@ -1,6 +1,7 @@
 package com.example.give10.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.example.give10.R;
@@ -20,7 +21,6 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -29,6 +29,10 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String mKeyPrefsName = "PREFS", mKeyGive10 = "GIVE10";
+    private boolean mPrefUseAutoSave;
+    private String mKeyAutoSave;
+
     // Fields for main activity
     private TextView mOwed;
     private TextView mTotalIncome;
@@ -36,20 +40,45 @@ public class MainActivity extends AppCompatActivity {
 
     private Give10 mGive10;
 
+
     @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString("GIVE10", mGive10.getGSONFromThis());
+    protected void onStop() {
+        saveToSharedPref();
+        super.onStop();
     }
 
-    @Override
-    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    private void saveToSharedPref() {
+        SharedPreferences preferences = getSharedPreferences(mKeyPrefsName, MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.clear();
+        editor.putBoolean(mKeyAutoSave, mPrefUseAutoSave);
+        if (mPrefUseAutoSave)
+            editor.putString(mKeyGive10, mGive10.getGSONFromThis());
+        editor.apply();
+    }
 
-        String json = savedInstanceState.getString("GIVE10");
-        mGive10 = Give10.getObjectFromGSONString(json);
 
-        updateTextViews();
+    private void restoreAutoSaveBooleanFromPrefs() {
+        // Since this is for reading only, no editor is needed unlike in saveRestoreState
+        SharedPreferences preferences = getSharedPreferences(mKeyPrefsName, MODE_PRIVATE);
+
+        // restore AutoSave preference value
+        mPrefUseAutoSave = preferences.getBoolean(mKeyAutoSave, true);
+    }
+
+    private boolean isValidGive10InPrefs() {
+        SharedPreferences preferences = getSharedPreferences(mKeyPrefsName, MODE_PRIVATE);
+
+        // restore the current game
+        String savedGame = preferences.getString(mKeyGive10, "");
+        return (savedGame != null && !savedGame.equals(""));
+    }
+
+
+     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(mKeyGive10, mGive10.getGSONFromThis());
     }
 
     @Override
@@ -59,8 +88,29 @@ public class MainActivity extends AppCompatActivity {
         setupToolbar();
         setupFAB();
         setupViews();
+        mKeyAutoSave = getString(R.string.key_auto_save);
+        restoreAutoSaveBooleanFromPrefs();
+        createOrGetGive10Object(savedInstanceState);
+    }
 
-        mGive10 = new Give10();
+    private void createOrGetGive10Object(Bundle savedInstanceState) {
+        if (savedInstanceState != null)
+        {
+            String json = savedInstanceState.getString(mKeyGive10);
+            mGive10 = Give10.getObjectFromGSONString(json);
+        }
+        else if (mPrefUseAutoSave && isValidGive10InPrefs())
+        {
+            SharedPreferences preferences = getSharedPreferences(mKeyPrefsName, MODE_PRIVATE);
+            mGive10 = Give10.getObjectFromGSONString(preferences.getString(mKeyGive10,""));
+        }
+        else
+        {
+            mGive10 = new Give10();
+        }
+
+        updateTextViews();
+
     }
 
     private void setupViews() {
@@ -86,6 +136,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        menu.findItem(R.id.auto_save).setChecked(mPrefUseAutoSave);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -99,24 +155,21 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        switch (id) {
-            case R.id.action_settings:
-                showSettings();
-                return true;
-            case R.id.summary:
-                showSummary();
-                return true;
-            case R.id.about:
-                showAbout();
-                return true;
+        if (id == R.id.summary) {
+            showSummary();
+            return true;
+        } else if (id == R.id.auto_save) {
+            item.setChecked(!item.isChecked());
+            mPrefUseAutoSave = !mPrefUseAutoSave;
+            return true;
+        } else if (id == R.id.about) {
+            showAbout();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void showSettings() {
-        //TODO implement settings
-    }
 
     private void showSummary() {
         Intent intent = new Intent(this, SummaryActivity.class);

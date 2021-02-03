@@ -22,7 +22,7 @@
     <string name="title_activity_give_charity">Give Charity</string>
     <string name="to_where">To where</string>
     <string name="about_app">Give 10 is a charity tracking app that allows users to track how much Maaser Money they owe
-    based on their income. \n\n By default, the app calculates based on the 10% requirement, however it can be changed.
+    based on their income. \n\n The app calculates based on 10% requirement.
     User "adds money" upon receiving income and "gives charity". \n\nTotal owed is displayed on the home screen. User can view summary of
     their "transactions" as well.</string>
     <string name="transaction">Transaction</string>
@@ -32,7 +32,25 @@
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
 
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="date_given">Date given</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Preference Titles -->
+    <string name="messages_header">Messages</string>
+    <string name="sync_header">Sync</string>
+
+    <!-- Messages Preferences -->
+    <string name="signature_title">Your signature</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
+    <string name="attachment_title">Download incoming attachments</string>
+    <string name="attachment_summary_on">Automatically download attachments for incoming emails
+    </string>
+    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="save_transactions">Save Transactions</string>
+    <string name="about">About</string>
+    <string name="summary">Summary</string>
+    <string name="key_auto_save">save_transactions_after_closing</string>
 </resources>

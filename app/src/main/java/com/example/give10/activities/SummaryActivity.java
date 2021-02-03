@@ -69,6 +69,3 @@ public class SummaryActivity extends AppCompatActivity {
             return super.onOptionsItemSelected(item);
     }
 }
-
-// TODO fix layout
-// TODO add a reset button - better idea to add that in MainActivity where there is access to obj.
